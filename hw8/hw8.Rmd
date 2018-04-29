@@ -499,7 +499,9 @@ Therefore we choose to merge the results of RF & GBM model and use it as our fin
 ##output result:
 ```{r}
 test_result <- read.csv("titanicQuestion.csv", stringsAsFactors = F, na.strings = c("NA", ""))
-test_result$survived <- testClean$RF
+testClean$result <-testClean$RF
+testClean$result[testClean$onboat==TRUE &testClean$Boost==0] <-0
+test_result$survived <- testClean$result
 write.csv(test_result, file = "test_result.csv")
 ```
 

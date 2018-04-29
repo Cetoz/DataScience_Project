@@ -889,7 +889,9 @@ testClean[testClean$onboat==TRUE &amp;testClean$Boost==0,]</code></pre>
 <div id="output-result" class="section level2">
 <h2><span class="header-section-number">3.6</span> output result:</h2>
 <pre class="r"><code>test_result &lt;- read.csv(&quot;titanicQuestion.csv&quot;, stringsAsFactors = F, na.strings = c(&quot;NA&quot;, &quot;&quot;))
-test_result$survived &lt;- testClean$RF
+testClean$result &lt;-testClean$RF
+testClean$result[testClean$onboat==TRUE &amp;testClean$Boost==0] &lt;-0
+test_result$survived &lt;- testClean$result
 write.csv(test_result, file = &quot;test_result.csv&quot;)</code></pre>
 </div>
 </div>
