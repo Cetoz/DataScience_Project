@@ -1,6 +1,6 @@
 ---
 title: "HW-8: ML Exercise on Titanic Dataset"
-author: "Group 2"
+author: "Group 2 崔芷瑄 韓曙憶 鄭富鴻"
 output:
   html_document:
     number_sections: true
@@ -15,7 +15,7 @@ opts_knit$set(root.dir = "~/Desktop")
 #Executive Summary
 Firstly we simply used an identity predictor showing whether the person was on life boat or not, and found out in all the three models the predictive results were same: people on life boat would survive and the rest would die. 
 
-Then we looked into the survival rate of diffrent boats and classified them into a predictor showing the safe level of the boat.
+Then we looked into the survival rate of different boats and classified them into a predictor showing the safe level of the boat.
 
 For prediction, we chose 4 predictors: BSafe (the suvival rate of each boat), PclassSex, GroupSize and FarePP, and applied three models: RM, SVM & GBM.
 
@@ -479,11 +479,33 @@ f3 <- ggplot(trainClean[trainClean$survived != trainClean$Boost,], aes(x=as.fact
 
 grid.arrange(f1, f2, f3, nrow = 1)
 ```
+
+
 #Analysis and choose the final model
+
 ##analysis:
 On training data, the result of SVM model and GBM model are significantly have larger count of false predictions.
 
 On the test data, SVM model model predict all those getting on life boat are survived and the rest died. The result of GBM model is basiclly the same except the only one passenger on boat A is predicted to be dead, while in RF model there are 8 person who didn't get on life boat but survived (which are closer to the situation showed in the trainning dataset).
+
+```{r}
+pp1 = ggplot(testClean, aes(x = as.factor(onboat), fill = as.factor(RF))) +
+  geom_bar(stat='count', position='dodge') + theme_grey() +
+  labs(x = 'whether get on boat',y='RF Survive') +
+  geom_label(stat='count', aes(label=..count..))
+
+pp2 = ggplot(testClean, aes(x = as.factor(onboat), fill = as.factor(SVM))) +
+  geom_bar(stat='count', position='dodge') + theme_grey() +
+  labs(x = 'whether get on boat',y='SVM Survive') +
+  geom_label(stat='count', aes(label=..count..))
+
+pp3 = ggplot(testClean, aes(x = as.factor(onboat), fill = as.factor(Boost))) +
+  geom_bar(stat='count', position='dodge') + theme_grey() +
+  labs(x = 'whether get on boat',y='GBM Survive') +
+  geom_label(stat='count', aes(label=..count..))
+
+grid.arrange(pp1, pp2, pp3,ncol=1)
+```
 
 ```{r}
 #in RF model there are 8 person who didn't get on life boat but survived
